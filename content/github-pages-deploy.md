@@ -122,18 +122,22 @@ jobs:
 
 2. 如果使用的是`pnpm`作为包管理器，要确保本地生成 pnpm-lock.yaml 文件的 pnpm 版本，和 GitHub Actions CI 环境中使用的 pnpm 版本一致，否则会出现类似下面的提示：
 
-```shell
-Run pnpm install --frozen-lockfile
-  pnpm install --frozen-lockfile
-  shell: /usr/bin/bash -e {0}
-  env:
-    PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
-    GITHUB_PAGES: true
-  
- WARN  Ignoring not compatible lockfile at /home/runner/work/erikssonhou-blog/erikssonhou-blog/pnpm-lock.yaml
- ERR_PNPM_NO_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is absent
-Note that in CI environments this setting is true by default. If you still need to run install in such cases, use "pnpm install --no-frozen-lockfile"
-Error: Process completed with exit code 1.
-```
+    ```shell
+    Run pnpm install --frozen-lockfile
+    pnpm install --frozen-lockfile
+    shell: /usr/bin/bash -e {0}
+    env:
+        PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+        GITHUB_PAGES: true
+    
+     WARN  Ignoring not compatible lockfile at /home/runner/work/erikssonhou-blog/erikssonhou-blog/pnpm-lock.yaml
+     ERR_PNPM_NO_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is absent
+    Note that in CI environments this setting is true by default. If you still need to run install in such cases, use "pnpm install --no-frozen-lockfile"
+    Error: Process completed with exit code 1.
+    ```
 
-具体来说，`pnpm-lock.yaml`的第一行指明了`pnpm`的`lockfileVersion`（本项目中为9.0），那在`Setup pnpm`这一步，就需要将对应的`version`改为`9.0`来和开发环境对齐。
+    具体来说，`pnpm-lock.yaml`的第一行指明了`pnpm`的`lockfileVersion`（本项目中为9.0），那在`Setup pnpm`这一步，就需要将对应的`version`改为`9.0`来和开发环境对齐。
+
+3. 部署之后页面为空？
+
+如果在`nuxt.config.ts`中设置了`baseURL`参数且它不为空，需要注释掉`actions/configure-pages@v5`中的`static_site_generator: nuxt`，这个参数会自动覆盖 `nuxt.config.ts`中的 `baseURL` 配置。
