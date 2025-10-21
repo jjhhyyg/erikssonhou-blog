@@ -1,7 +1,61 @@
+<script setup lang="ts">
+// 查询所有博客文章，按日期降序排列
+const { data: posts } = await useAsyncData('blog-posts', () =>
+    queryCollection('content')
+        .order('date', 'DESC')
+        .all()
+)
+
+import type { NavigationMenuItem } from '@nuxt/ui'
+import type { ContentNavigationItem } from '@nuxt/content'
+const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
+
+const navigationItems = computed(() => {
+    if (navigation.value) {
+        console.log('navigation.value exists')
+        return transform(navigation.value)
+    }
+    return []
+})
+
+const transform = (navigation: ContentNavigationItem[]): NavigationMenuItem[] => {
+    return navigation.map(nav => {
+        if (nav.children) {
+            return {
+                ...nav,
+                label: nav.title,
+                children: transform(nav.children)
+            } as NavigationMenuItem
+        }
+        else {
+            return {
+                ...nav,
+                label: nav.title,
+                to: nav.path
+            } as NavigationMenuItem
+        }
+    })
+}
+
+console.log(navigationItems.value)
+
+
+// 设置页面 SEO
+useSeoMeta({
+    title: '博客文章 - Eriksson Hou',
+    description: '欢迎来到我的博客，这里记录了我的学习和思考'
+})
+
+</script>
+
 <template>
     <UPage>
         <UPageHeader :title="$t('home.header')" :description="$t('home.description')" />
-
+        <template #left>
+            <UPageAside>
+                <UNavigationMenu :items="navigationItems" orientation="vertical" />
+            </UPageAside>
+        </template>
         <UPageBody>
             <!-- 博客列表网格 -->
             <UPageGrid v-if="posts && posts.length > 0">
@@ -23,18 +77,3 @@
         </UPageBody>
     </UPage>
 </template>
-
-<script setup lang="ts">
-// 查询所有博客文章，按日期降序排列
-const { data: posts } = await useAsyncData('blog-posts', () =>
-    queryCollection('content')
-        .order('date', 'DESC')
-        .all()
-)
-
-// 设置页面 SEO
-useSeoMeta({
-    title: '博客文章 - Eriksson Hou',
-    description: '欢迎来到我的博客，这里记录了我的学习和思考'
-})
-</script>
