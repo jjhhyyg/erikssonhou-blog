@@ -423,3 +423,5 @@ const navItems = computed<NavigationMenuItem[]>(() => [{
 - ✅ **完全可定制** - CSS 变量 + Tailwind + app.config
 
 现在你已经掌握了 Nuxt UI 4.0 的主题系统,可以为你的应用添加优雅的明暗主题切换功能了!
+
+更改测试
