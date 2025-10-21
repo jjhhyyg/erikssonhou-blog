@@ -140,4 +140,40 @@ jobs:
 
 3. 部署之后页面为空？
 
-如果在`nuxt.config.ts`中设置了`baseURL`参数且它不为空，需要注释掉`actions/configure-pages@v5`中的`static_site_generator: nuxt`，这个参数会自动覆盖 `nuxt.config.ts`中的 `baseURL` 配置。
+    **问题现象：** 部署到 GitHub Pages 后，访问页面显示空白，浏览器控制台提示大量 404 错误（资源路径错误）。
+
+    **根本原因：** `actions/configure-pages@v5` 的 `static_site_generator: nuxt` 参数会**自动覆盖** `nuxt.config.ts` 中的 `baseURL` 配置，导致构建时使用了错误的基础路径。
+
+    **症状识别：**
+    - 本地 `pnpm run generate` 生成的路由包含正确的 baseURL（如 `/erikssonhou-blog/about`）
+    - GitHub Actions 日志中生成的路由却是根路径（如 `/about`）
+    - 线上 HTML 中的 `window.__NUXT__.config.app.baseURL` 值为 `/` 而非期望的子路径
+
+    **解决方案：** 注释掉 `Setup Pages` 步骤中的 `static_site_generator` 参数：
+
+    ```yml
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+      # 注释掉 static_site_generator，避免覆盖 nuxt.config.ts 中的 baseURL 配置
+      # with:
+      #     static_site_generator: nuxt
+    ```
+
+4. 构建失败：`Can't resolve 'tailwindcss'`？
+
+    **问题现象：** GitHub Actions 构建失败，错误信息为：
+
+    ```text
+    [@tailwindcss/vite:generate:build] Can't resolve 'tailwindcss'
+    in '/home/runner/work/.../app/assets/css'
+    ```
+
+    **根本原因：** 如果 CSS 文件中使用了 `@import "tailwindcss"`，但 `package.json` 中没有显式声明 `tailwindcss` 依赖，在 CI 环境使用 `--frozen-lockfile` 时，peer dependencies 可能无法正确安装。
+
+    **解决方案：** 显式添加 `tailwindcss` 到 `devDependencies`：
+
+    ```bash
+    pnpm add -D tailwindcss
+    ```
+
+    即使 `tailwindcss` 已经通过其他依赖（如 `@nuxt/ui`）间接引入，在生产构建环境中仍建议显式声明，确保依赖关系明确且可重现。
