@@ -27,9 +27,9 @@
 
                 <!-- 可选：编辑按钮 -->
                 <UButton v-if="page?.stem"
-                    :to="`https://github.com/jjhhyyg/nuxt4-project/edit/main/content${page.path.replace('/blogs', '')}.md`"
+                    :to="`https://github.com/jjhhyyg/erikssonhou-blog/edit/main/content${page.path.replace('/blogs', '')}.md`"
                     target="_blank" variant="ghost" color="neutral" trailing-icon="i-lucide-external-link"
-                    label="编辑此页" />
+                    label="欢迎纠错" />
             </div>
         </UPageBody>
 

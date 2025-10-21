@@ -27,5 +27,9 @@ export default defineNuxtConfig({
         fallback: 'light',
         storageKey: 'nuxt-color-mode',
         storage: 'localStorage'
+    },
+    app: {
+        baseURL: '/erikssonhou-blog/',
+        buildAssetsDir: 'assets'
     }
 })
