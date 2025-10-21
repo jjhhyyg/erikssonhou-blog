@@ -1,0 +1,15 @@
+{
+    "header": {
+        "title": "Eriksson Hou的博客",
+        "home": "主页",
+        "about": "关于自己"
+    },
+    "footer": {
+        "blogManagement": "博客管理"
+    },
+    "home": {
+        "header": "博客文章",
+        "description": "欢迎来到我的博客，这里记录了我的学习和思考",
+        "noBlogPlaceHolder": "暂无博客文章"
+    }
+}

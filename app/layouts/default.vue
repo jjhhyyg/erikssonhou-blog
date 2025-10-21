@@ -2,25 +2,28 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const { t, setLocale, locale } = useI18n()
 
 const navItems = computed<NavigationMenuItem[]>(() => [{
-    label: 'Home',
+    label: t('header.home'),
     to: '/',
     icon: 'i-lucide-home',
     active: route.path === '/'
 }, {
-    label: 'About',
+    label: t('header.about'),
     to: '/about',
     icon: 'i-lucide-info',
     active: route.path === '/about'
 }])
 
-const footerLinks: NavigationMenuItem[] = [{
-    key: 1,
-    label: 'Blog Management',
-    to: '/blog-management',
-    icon: 'i-material-symbols-bookmark-manager-outline-rounded'
-}]
+const footerLinks = computed<NavigationMenuItem[]>(() => [
+    {
+        key: 1,
+        label: t('footer.blogManagement'), // 在 computed 内部调用 t()
+        to: '/blog-management',
+        icon: 'i-material-symbols-bookmark-manager-outline-rounded'
+    }
+])
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('content'), {
@@ -28,15 +31,24 @@ const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSe
 })
 
 const searchTerm = ref("")
+
+
+
+// 目前仅支持中/英切换
+const toggleLocale = () => {
+    setLocale(locale.value === 'zh' ? 'en' : 'zh')
+}
 </script>
 
 <template>
-    <UHeader title="Eriksson Hou's Blog" class="w-full" to="/">
+    <UHeader :title="$t('header.title')" class="w-full" to="/">
 
         <UNavigationMenu :items="navItems" orientation="horizontal" />
         <template #right>
             <UContentSearchButton variant="ghost" />
             <UColorModeButton size="sm" variant="ghost" as="button" />
+            <UButton icon="i-lucide-languages" :aria-label="locale === 'zh' ? 'Switch to English' : '切换至简体中文'"
+                @click="toggleLocale()" variant="ghost" />
             <UButton icon="i-lucide-github" aria-label="Github Home Page" to="https://github.com/jjhhyyg/"
                 target="_blank" size="sm" variant="ghost" />
             <ClientOnly>

@@ -1,0 +1,15 @@
+{
+    "header": {
+        "title": "Eriksson Hou's Blog",
+        "home": "Home",
+        "about": "About"
+    },
+    "footer": {
+        "blogManagement": "Blog Management"
+    },
+    "home": {
+        "header": "Blogs",
+        "description": "Welcome to my blog page! Studies and reflections are recorded here.",
+        "noBlogPlaceHolder": "No blog posts yet."
+    }
+}
