@@ -23,13 +23,14 @@
 
             <!-- 底部导航按钮 -->
             <div class="flex justify-between items-center">
-                <UButton to="/" variant="soft" color="neutral" icon="i-lucide-arrow-left" label="返回首页" />
+                <UButton to="/" variant="soft" color="neutral" icon="i-lucide-arrow-left"
+                    :label="$t('footer.backToHome')" />
 
                 <!-- 可选：编辑按钮 -->
                 <UButton v-if="page?.stem"
                     :to="`https://github.com/jjhhyyg/erikssonhou-blog/edit/main/content${page.path.replace('/blogs', '')}.md`"
                     target="_blank" variant="ghost" color="neutral" trailing-icon="i-lucide-external-link"
-                    label="欢迎纠错" />
+                    :label="$t('footer.welcomeErrorCorrection')" />
             </div>
         </UPageBody>
 
@@ -49,12 +50,14 @@ const { data: page } = await useAsyncData(
     () => queryCollection('content').path(route.path).first()
 )
 
+const { t } = useI18n()
+
 // 如果页面不存在，显示 404
 if (!page.value) {
     throw createError({
         statusCode: 404,
-        statusMessage: '页面未找到',
-        message: `找不到路径 ${route.path} 对应的文档`
+        statusMessage: t('404.title'),
+        message: `${t('404.description')} ${route.path}`
     })
 }
 

@@ -5,11 +5,18 @@
         "about": "关于自己"
     },
     "footer": {
-        "blogManagement": "博客管理"
+        "blogManagement": "博客管理",
+        "backToHome": "返回首页",
+        "welcomeErrorCorrection": "欢迎纠错"
     },
     "home": {
         "header": "博客文章",
         "description": "欢迎来到我的博客，这里记录了我的学习和思考",
         "noBlogPlaceHolder": "暂无博客文章"
+    },
+    "404": {
+        "title": "页面未找到",
+        "description": "抱歉，您访问的页面不存在。",
+        "backToHome": "返回首页"
     }
 }
