@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
-    modules: ['@nuxt/ui', '@nuxt/icon', '@pinia/nuxt'],
+    modules: ['@nuxt/ui', '@nuxt/icon', '@pinia/nuxt', '@nuxt/content'],
     devtools: { enabled: true },
     icon: {
         localApiEndpoint: '/nuxt-icon'

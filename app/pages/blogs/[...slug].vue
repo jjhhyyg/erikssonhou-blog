@@ -1,0 +1,67 @@
+<template>
+    <UPage>
+        <!-- 页面头部 -->
+        <UPageHeader title="" description="">
+            <!-- 元信息：日期等 -->
+            <template v-if="page?.date" #headline>
+                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                    <UIcon name="i-lucide-calendar" class="size-4" />
+                    <time :datetime="page.date">{{ page.date }}</time>
+                </div>
+            </template>
+        </UPageHeader>
+
+        <!-- 页面内容 -->
+        <UPageBody>
+            <!-- 渲染 Markdown 内容 -->
+            <div class="prose dark:prose-invert max-w-none">
+                <ContentRenderer v-if="page" :value="page" />
+            </div>
+
+            <!-- 分隔线 -->
+            <USeparator class="my-8" />
+
+            <!-- 底部导航按钮 -->
+            <div class="flex justify-between items-center">
+                <UButton to="/" variant="soft" color="neutral" icon="i-lucide-arrow-left" label="返回首页" />
+
+                <!-- 可选：编辑按钮 -->
+                <UButton v-if="page?.stem"
+                    :to="`https://github.com/jjhhyyg/nuxt4-project/edit/main/content/${page.stem}.md`" target="_blank"
+                    variant="ghost" color="neutral" trailing-icon="i-lucide-external-link" label="编辑此页" />
+            </div>
+        </UPageBody>
+
+        <!-- 右侧：目录 -->
+        <template v-if="page?.body?.toc?.links" #right>
+            <UContentToc :links="page.body.toc.links" />
+        </template>
+    </UPage>
+</template>
+
+<script setup lang="ts">
+const route = useRoute()
+
+// 查询当前路径对应的文档
+const { data: page } = await useAsyncData(
+    `content-${route.path}`,
+    () => queryCollection('content').path(route.path).first()
+)
+
+// 如果页面不存在，显示 404
+if (!page.value) {
+    throw createError({
+        statusCode: 404,
+        statusMessage: '页面未找到',
+        message: `找不到路径 ${route.path} 对应的文档`
+    })
+}
+
+// 设置页面的 SEO 信息
+useSeoMeta({
+    title: page.value?.title,
+    description: page.value?.description,
+    ogTitle: page.value?.title,
+    ogDescription: page.value?.description
+})
+</script>

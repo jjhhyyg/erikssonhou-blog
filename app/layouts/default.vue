@@ -16,42 +16,48 @@ const navItems = computed<NavigationMenuItem[]>(() => [{
 }])
 
 const footerLinks: NavigationMenuItem[] = [{
+    key: 1,
     label: 'Blog Management',
-    to: '/blog-management'
+    to: '/blog-management',
+    icon: 'i-material-symbols-bookmark-manager-outline-rounded'
 }]
+
+const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('content'), {
+    server: false
+})
+
+const searchTerm = ref("")
 </script>
 
 <template>
-    <div>
-        <!-- Header -->
-        <UHeader title="Eriksson Hou's Blog">
-            <UNavigationMenu :items="navItems" />
+    <UHeader title="Eriksson Hou's Blog" class="w-full" to="/">
 
-            <template #right>
-                <!-- 
-                    As the button is wrapped in a ClientOnly component, 
-                    you can pass a fallback slot to display a placeholder while the component is loading. 
-                 -->
-                <UColorModeButton>
-                    <template #fallback>
-                        <UButton loading variant="ghost" color="neutral" />
-                    </template>
-                </UColorModeButton>
-                <UButton variant="ghost" icon="i-lucide-github" aria-label="GitHub" size="sm"
-                    to="https://github.com/jjhhyyg/" target="_blank" />
-            </template>
-        </UHeader>
+        <UNavigationMenu :items="navItems" orientation="horizontal" />
+        <template #right>
+            <UContentSearchButton variant="ghost" />
+            <UColorModeButton size="sm" variant="ghost" as="button" />
+            <UButton icon="i-lucide-github" aria-label="Github Home Page" to="https://github.com/jjhhyyg/"
+                target="_blank" size="sm" variant="ghost" />
+            <ClientOnly>
+                <LazyUContentSearch v-model:search-term="searchTerm" shortcut="meta_k" :files="files"
+                    :navigation="navigation" :fuse="{ resultLimit: 42 }" />
+            </ClientOnly>
+        </template>
+    </UHeader>
 
-        <!-- Main Content -->
-        <UContainer class="h-[100vh]">
-            <slot />
-        </UContainer>
+    <UContainer>
+        <slot />
+    </UContainer>
 
-        <!-- Footer -->
-        <UFooter>
-            <template #right>
-                <UNavigationMenu :items="footerLinks" variant="link" />
-            </template>
-        </UFooter>
-    </div>
+    <UFooter>
+        <!--Add Copyright-->
+        <span>© 2025 Eriksson Hou. All rights reserved.</span>
+        <template #right>
+            <UButton v-for="link in footerLinks" :key="link.key" :to="link.to" target="_blank" :icon="link.icon"
+                variant="ghost" size="sm">
+                {{ link.label }}
+            </UButton>
+        </template>
+    </UFooter>
 </template>
