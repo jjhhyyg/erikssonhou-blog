@@ -27,8 +27,9 @@
 
                 <!-- 可选：编辑按钮 -->
                 <UButton v-if="page?.stem"
-                    :to="`https://github.com/jjhhyyg/nuxt4-project/edit/main/content/${page.stem}.md`" target="_blank"
-                    variant="ghost" color="neutral" trailing-icon="i-lucide-external-link" label="编辑此页" />
+                    :to="`https://github.com/jjhhyyg/nuxt4-project/edit/main/content${page.path.replace('/blogs', '')}.md`"
+                    target="_blank" variant="ghost" color="neutral" trailing-icon="i-lucide-external-link"
+                    label="编辑此页" />
             </div>
         </UPageBody>
 
