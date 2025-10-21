@@ -18,7 +18,7 @@
             <!-- 如果没有文章 -->
             <div v-else class="text-center py-12">
                 <UIcon name="i-lucide-inbox" class="size-12 text-gray-400 mx-auto mb-4" />
-                <p class="text-gray-500 dark:text-gray-400">暂无博客文章</p>
+                <p class="text-gray-500 dark:text-gray-400">{{ $t('home.noBlogPlaceHolder') }}</p>
             </div>
         </UPageBody>
     </UPage>
