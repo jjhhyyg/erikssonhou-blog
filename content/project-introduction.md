@@ -2,11 +2,7 @@
 date: 2025-10-22
 title: 项目介绍
 description: 本项目用于学习Nuxt 4及Nuxt UI 4技术
-navigation:
-    title: 项目介绍
 ---
-
-# 项目介绍
 
 本项目用于学习Nuxt 4及Nuxt UI 4技术
 

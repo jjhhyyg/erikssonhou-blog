@@ -2,11 +2,7 @@
 date: 2025-10-21
 title: Nuxt UI 4.0 明暗主题系统指南
 description: Nuxt UI 4.0 的主题系统完整使用指南
-navigation:
-    title: Nuxt UI 4.0 明暗主题系统指南
 ---
-
-# Nuxt UI 4.0 明暗主题系统指南
 
 ## 📚 核心概念
 
