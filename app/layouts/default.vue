@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { mapContentNavigationItem } from '@nuxt/ui/runtime/utils/content.js'
 
 const route = useRoute()
 const { t, setLocale, locale } = useI18n()
@@ -26,9 +27,14 @@ const footerLinks = computed<NavigationMenuItem[]>(() => [
 ])
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
+
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('content'), {
     server: false
 })
+
+import type { ContentNavigationItem } from '@nuxt/content'
+const navigationProvided = computed<ContentNavigationItem[]>(() => navigation?.value ?? [])
+provide<Ref<ContentNavigationItem[]>>('navigation', navigationProvided)
 
 const searchTerm = ref("")
 
@@ -41,7 +47,9 @@ const toggleLocale = () => {
 </script>
 
 <template>
-    <UHeader :title="$t('header.title')" class="w-full" to="/">
+    <UHeader :title="$t('header.title')" to="/" :ui="{
+        root: 'w-full'
+    }">
 
         <UNavigationMenu :items="navItems" orientation="horizontal" />
         <template #right>
@@ -62,7 +70,9 @@ const toggleLocale = () => {
         <slot />
     </UContainer>
 
-    <UFooter>
+    <UFooter :ui="{
+        root: 'border-t border-default dark:border-default'
+    }">
         <!--Add Copyright-->
         <span>© 2025 Eriksson Hou. All rights reserved.</span>
         <template #right>

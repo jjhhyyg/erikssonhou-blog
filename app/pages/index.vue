@@ -2,43 +2,15 @@
 // 查询所有博客文章，按日期降序排列
 const { data: posts } = await useAsyncData('blog-posts', () =>
     queryCollection('content')
+        .where('date', 'IS NOT NULL')
         .order('date', 'DESC')
         .all()
 )
 
-import type { NavigationMenuItem } from '@nuxt/ui'
 import type { ContentNavigationItem } from '@nuxt/content'
-const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-const navigationItems = computed(() => {
-    if (navigation.value) {
-        console.log('navigation.value exists')
-        return transform(navigation.value)
-    }
-    return []
-})
-
-const transform = (navigation: ContentNavigationItem[]): NavigationMenuItem[] => {
-    return navigation.map(nav => {
-        if (nav.children) {
-            return {
-                ...nav,
-                label: nav.title,
-                children: transform(nav.children)
-            } as NavigationMenuItem
-        }
-        else {
-            return {
-                ...nav,
-                label: nav.title,
-                to: nav.path
-            } as NavigationMenuItem
-        }
-    })
-}
-
-console.log(navigationItems.value)
-
+console.log(navigation?.value)
 
 // 设置页面 SEO
 useSeoMeta({
@@ -52,8 +24,10 @@ useSeoMeta({
     <UPage>
         <UPageHeader :title="$t('home.header')" :description="$t('home.description')" />
         <template #left>
-            <UPageAside>
-                <UNavigationMenu :items="navigationItems" orientation="vertical" />
+            <UPageAside :ui="{
+                root: 'border-r border-default dark:border-default'
+            }">
+                <UContentNavigation :navigation="navigation" highlight />
             </UPageAside>
         </template>
         <UPageBody>
