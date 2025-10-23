@@ -28,4 +28,4 @@ description: 介绍了 `useFetch` 和 `$fetch` 的区别和使用方式
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </iframe>
 
-或者 [数据请求](/Nuxt/data-fetching) 文档中也有详细介绍。
+或者 [数据请求](./data-fetching) 文档中也有详细介绍。

@@ -12,6 +12,11 @@ export default defineNuxtConfig({
         port: 3000
     },
     css: ['~/assets/css/main.css'], // css入口文件
+    vite: {
+        build: {
+            sourcemap: false, // 禁用 sourcemap 以避免 Tailwind CSS v4 的警告
+        }
+    },
     // 前后端分离开发时，跨域设置
     nitro: {
         // devProxy: {
