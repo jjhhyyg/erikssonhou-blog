@@ -73,3 +73,7 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## License
+
+This project is licensed under the GNU General Public License (GPL). See the LICENSE file in the project root for the full text of the license.

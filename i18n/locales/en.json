@@ -1,21 +1,26 @@
 {
-    "header": {
-        "title": "Eriksson Hou's Blog",
-        "home": "Home",
-        "about": "About"
-    },
-    "footer": {
-        "blogManagement": "Blog Management",
-        "backToHome": "Back to Home",
-        "welcomeErrorCorrection": "Error Correction Appreciated"
-    },
-    "home": {
-        "header": "Blogs",
-        "description": "Welcome to my blog page! Studies and reflections are recorded here.",
-        "noBlogPlaceHolder": "No blog posts yet."
-    },
-    "404": {
-        "title": "Page Not Found",
-        "description": "Sorry, the page you are looking for does not exist."
+  "header": {
+    "title": "Eriksson Hou's Blog",
+    "home": "Home",
+    "about": "About"
+  },
+  "footer": {
+    "blogManagement": "Blog Management",
+    "backToHome": "Back to Home",
+    "welcomeErrorCorrection": "Error Correction Appreciated"
+  },
+  "home": {
+    "header": "Blogs",
+    "description": "Welcome to my blog page! Studies and reflections are recorded here.",
+    "noBlogPlaceHolder": "No blog posts yet."
+  },
+  "blog": {
+    "content-toc": {
+      "title": "Table of Contents"
     }
+  },
+  "404": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist."
+  }
 }
