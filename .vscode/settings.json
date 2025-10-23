@@ -1,0 +1,20 @@
+// settings.json
+{
+    // 1. 设置图片保存位置
+    // 所有粘贴的图片都保存到 [项目根目录]/public/images 文件夹
+    "MarkdownPaste.path": "${workspaceFolder}/public/images",
+    // 2. 禁用弹窗确认
+    "MarkdownPaste.silence": true,
+    // 3. 设置路径重写规则
+    // (注意: 必须放在其他规则的前面，才能优先匹配)
+    "MarkdownPaste.rules": [
+        {
+            // 匹配粘贴时生成的默认图片路径 (例如 ../../public/images/foo.png)
+            // '.*[\\\\/]' 匹配 '.../' 或 '...\'
+            // 捕获 'public/images/' 之后的文件名 (例如 'foo.png') 到 $1
+            "regex": ".*[\\\\/]public[\\\\/]images[\\\\/](.*)",
+            "options": "i", // 'i' = 不区分大小写
+            "replace": "![](/images/$1)" // 替换为你想要的Nuxt Content根路径格式
+        }
+    ],
+}
