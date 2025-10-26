@@ -10,7 +10,8 @@
                 </div>
             </template>
             <template v-if="page?.title">
-                <h1 class="text-3xl font-bold leading-tight tracking-tight md:text-4xl">
+                <h1
+                    class="text-3xl font-bold leading-tight tracking-tight md:text-4xl text-cyan-600 dark:text-cyan-400">
                     {{ page.title }}
                 </h1>
             </template>
