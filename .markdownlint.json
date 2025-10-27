@@ -4,5 +4,9 @@
     },
     "MD033": {
         "allowed_elements": ["iframe"]
-    }
+    },
+    "MD024": {
+        "siblings_only": true
+    },
+    "MD014": false
 }
