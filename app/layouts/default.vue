@@ -64,6 +64,11 @@ const toggleLocale = () => {
                     :navigation="navigation" :fuse="{ resultLimit: 42 }" />
             </ClientOnly>
         </template>
+
+        <template #body>
+            <UNavigationMenu :items="navItems" orientation="vertical" class="-mx-2.5 mb-4" />
+            <UContentNavigation :navigation="navigation" highlight />
+        </template>
     </UHeader>
 
     <UContainer>

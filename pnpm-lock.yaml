@@ -51,6 +51,9 @@ importers:
       '@iconify-json/material-symbols':
         specifier: ^1.2.42
         version: 1.2.42
+      '@iconify-json/vscode-icons':
+        specifier: ^1.2.33
+        version: 1.2.33
       tailwindcss:
         specifier: ^4.1.15
         version: 4.1.15
@@ -468,6 +471,9 @@ packages:
 
   '@iconify-json/material-symbols@1.2.42':
     resolution: {integrity: sha512-FDRfnQqy8iXaq/swVPFWaHftqP9tk3qDCRhC30s3UZL2j4mvGZk5gVECRXCkZv5jnsAiTpZxGQM8HrMiwE7GtA==}
+
+  '@iconify-json/vscode-icons@1.2.33':
+    resolution: {integrity: sha512-2lKDybGxXXeLeeqeNT2YVDYXs5va0YMHf06w3GemS22j/0CCTpKwKDK7REaibsCq3bRV8qX0RJDM4AbREE7L+w==}
 
   '@iconify/collections@1.0.608':
     resolution: {integrity: sha512-uMbaErE6TzDb04peWVFYjc9cweBD+j1nFBHi5EEcA1u1mXJAyePF01VzH6dimurrhivvU+nRmuYfiC8GPDyG6g==}
@@ -5519,6 +5525,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/material-symbols@1.2.42':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/vscode-icons@1.2.33':
     dependencies:
       '@iconify/types': 2.0.0
 
