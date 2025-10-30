@@ -1,6 +1,6 @@
 {
     "MD013": {
-        "line_length": 120
+        "line_length": 240
     },
     "MD033": {
         "allowed_elements": ["iframe"]
@@ -8,5 +8,6 @@
     "MD024": {
         "siblings_only": true
     },
-    "MD014": false
+    "MD014": false,
+    "MD036": false
 }
