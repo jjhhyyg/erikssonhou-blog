@@ -1,2 +1,13 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* 修复锚点跳转时被 Header 遮住的问题 */
+/* 为所有标题添加滚动偏移量，确保跳转时显示在 Header 下方 */
+.prose :is(h1, h2, h3, h4, h5, h6) {
+    scroll-margin-top: calc(var(--ui-header-height));
+}
+
+/* 也可以为整个文档设置滚动填充 */
+/* html {
+    scroll-padding-top: calc(var(--ui-header-height));
+} */

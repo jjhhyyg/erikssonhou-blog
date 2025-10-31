@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     modules: ['@nuxt/ui', '@nuxt/icon', '@pinia/nuxt', '@nuxt/content', '@nuxtjs/i18n'],
-    devtools: { enabled: true },
+    devtools: {
+        enabled: true,
+
+        timeline: {
+            enabled: true
+        }
+    },
     icon: {
         localApiEndpoint: '/nuxt-icon'
     },
@@ -49,6 +55,26 @@ export default defineNuxtConfig({
             useCookie: true,
             cookieKey: 'i18n_redirected',
             redirectOn: 'root'
+        }
+    },
+    content: {
+        build: {
+            markdown: {
+                // 启用 Table of Contents 生成,这会自动为标题生成 ID
+                toc: {
+                    depth: 5,
+                    searchDepth: 6
+                }
+            }
+        },
+        renderer: {
+            anchorLinks: {
+                h2: true,
+                h3: true,
+                h4: true,
+                h5: true,
+                h6: true
+            }
         }
     }
 })
