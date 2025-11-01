@@ -40,7 +40,7 @@ export default defineNuxtConfig({
         storage: 'localStorage'
     },
     app: {
-        baseURL: '/erikssonhou-blog/',
+        baseURL: '/', // 使用自定义域名时应该是根路径
         buildAssetsDir: 'assets'
     },
     i18n: {
