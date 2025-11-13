@@ -50,10 +50,13 @@
 <script setup lang="ts">
 const route = useRoute()
 
+// 将路由路径转换为内容路径（去掉 /blogs 前缀）
+const contentPath = route.path.replace('/blogs', '')
+
 // 查询当前路径对应的文档
 const { data: page } = await useAsyncData(
     `content-${route.path}`,
-    () => queryCollection('content').path(route.path).first()
+    () => queryCollection('content').path(contentPath).first()
 )
 
 const { t } = useI18n()
