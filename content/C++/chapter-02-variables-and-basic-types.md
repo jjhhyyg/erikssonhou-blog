@@ -12,19 +12,19 @@ description: 介绍了 C++ 的内置类型，了解 C++ 复杂数据类型
 
 算术类型的尺寸在不同机器上有所差别。下表列出了 C++ 标准规定的尺寸的最小值，同时允许编译器赋予这些类型更大的尺寸。
 
-| Type | Meaning | Minimum Size |
-|------|---------|--------------|
-| bool | Boolean | N/A |
-| char | Character | 8 bits |
-| wchar_t | Wide character | 16 bits |
-| char16_t | Unicode character | 16 bits |
-| char32_t | Unicode character | 32 bits |
-| short | Short integer | 16 bits |
-| int | Integer | 16 bits |
-| long | Long integer | 32 bits |
-| long long | Long integer | 64 bits |
-| float | Single-precision floating-point | 6 significant digits |
-| double | Double-precision floating-point | 10 significant digits |
+| Type        | Meaning                           | Minimum Size          |
+| ----------- | --------------------------------- | --------------------- |
+| bool        | Boolean                           | N/A                   |
+| char        | Character                         | 8 bits                |
+| wchar_t     | Wide character                    | 16 bits               |
+| char16_t    | Unicode character                 | 16 bits               |
+| char32_t    | Unicode character                 | 32 bits               |
+| short       | Short integer                     | 16 bits               |
+| int         | Integer                           | 16 bits               |
+| long        | Long integer                      | 32 bits               |
+| long long   | Long integer                      | 64 bits               |
+| float       | Single-precision floating-point   | 6 significant digits  |
+| double      | Double-precision floating-point   | 10 significant digits |
 | long double | Extended-precision floating-point | 10 significant digits |
 
 #### 字符类型
@@ -108,12 +108,12 @@ description: 介绍了 C++ 的内置类型，了解 C++ 复杂数据类型
 
 3. float 和 double 的区别
 
-    | 特性 | float | double |
-    |------|-------|--------|
-    | **存储大小** | 4字节（32位） | 8字节（64位） |
-    | **有效数字位数** | 约6-7位十进制数字 | 约15-16位十进制数字 |
-    | **精度** | 单精度 | 双精度 |
-    | **指数范围** | 约10^(-38)到10^(38) | 约10^(-308)到10^(308) |
+    | 特性             | float               | double                |
+    | ---------------- | ------------------- | --------------------- |
+    | **存储大小**     | 4字节（32位）       | 8字节（64位）         |
+    | **有效数字位数** | 约6-7位十进制数字   | 约15-16位十进制数字   |
+    | **精度**         | 单精度              | 双精度                |
+    | **指数范围**     | 约10^(-38)到10^(38) | 约10^(-308)到10^(308) |
 
     **术语说明：**
 
@@ -241,21 +241,21 @@ std::cout << "hello hello hello"
 
 C++语言规定的转义序列包括：
 
-|  |  |   |   |
-| ---- | ---- | ---- | ---- |
-| 换行符 | \n | 双引号 | \" |
-| 横向制表符 | \t | 单引号 | \' |
-| 报警（响铃）符 | \a | 反斜线 | \\ |
-| 纵向制表符 | \v | 问号 | \? |
-| 退格符 | \b | 回车符 | \r |
-| 进纸符 | \f | | |
+|                |     |        |     |
+| -------------- | --- | ------ | --- |
+| 换行符         | \n  | 双引号 | \"  |
+| 横向制表符     | \t  | 单引号 | \'  |
+| 报警（响铃）符 | \a  | 反斜线 | \\  |
+| 纵向制表符     | \v  | 问号   | \?  |
+| 退格符         | \b  | 回车符 | \r  |
+| 进纸符         | \f  |        |     |
 
 我们也可以使用泛化的转义序列，其形式是＼x 后紧跟 1个或多个十六进制数字，或者＼后紧跟 1 个、2 个或3 个八进制数字，其中数字部分表示的是字符对应的数值。假设使用的是 Latin-1 字符集，以下是一些示例：
 
-|    |    |    |
-| -- | -- | -- |
-|\7（响铃）|\12（换行符）|\40（空格）|
-|\0（空字符）|\115（字符M）|\x4d（字符M）|
+|              |               |               |
+| ------------ | ------------- | ------------- |
+| \7（响铃）   | \12（换行符） | \40（空格）   |
+| \0（空字符） | \115（字符M） | \x4d（字符M） |
 
 ![指定字面值的类型](/images/20251028195503.png)
 
@@ -272,40 +272,40 @@ C++语言规定的转义序列包括：
 
 (a)
 
-|字面值|数据类型|描述|
-|-|-|-|
-|'a'|char|占一个字节|
-|L'a'|wchar_t|长字符，占两个字节|
-|"a"|const char[2]|占两个字节，第一个字节内容为'a'，第二个字节内容为'\0'|
-|L"a"|const wchar_t[2]|占四个字节，第一个字节内容为L'a'，第二个字节内容为L'\0'|
+| 字面值 | 数据类型         | 描述                                                    |
+| ------ | ---------------- | ------------------------------------------------------- |
+| 'a'    | char             | 占一个字节                                              |
+| L'a'   | wchar_t          | 长字符，占两个字节                                      |
+| "a"    | const char[2]    | 占两个字节，第一个字节内容为'a'，第二个字节内容为'\0'   |
+| L"a"   | const wchar_t[2] | 占四个字节，第一个字节内容为L'a'，第二个字节内容为L'\0' |
 
 (b)
 
-|字面值|数据类型|描述|
-|-|-|-|
-|10|int||
-|10u|unsigned int||
-|10L|long||
-|10uL|unsigned long||
-|012|int|八进制数，表示为十进制的10|
-|0xc|int|十六进制数，表示为十进制的12 |
+| 字面值 | 数据类型      | 描述                         |
+| ------ | ------------- | ---------------------------- |
+| 10     | int           |                              |
+| 10u    | unsigned int  |                              |
+| 10L    | long          |                              |
+| 10uL   | unsigned long |                              |
+| 012    | int           | 八进制数，表示为十进制的10   |
+| 0xc    | int           | 十六进制数，表示为十进制的12 |
 
 (c)
 
-|字面值|数据类型|描述|
-|-|-|-|
-|3.14|double|双精度浮点数|
-|3.14f|float|单精度浮点数|
-|3.14L|long double|长双精度浮点数|
+| 字面值 | 数据类型    | 描述           |
+| ------ | ----------- | -------------- |
+| 3.14   | double      | 双精度浮点数   |
+| 3.14f  | float       | 单精度浮点数   |
+| 3.14L  | long double | 长双精度浮点数 |
 
 (d)
 
-|字面值|数据类型|描述|
-|-|-|-|
-|10|int||
-|10u|unsigned int||
-|10.|double|浮点数，等价于10.0|
-|10e-2|double|科学计数法|
+| 字面值 | 数据类型     | 描述               |
+| ------ | ------------ | ------------------ |
+| 10     | int          |                    |
+| 10u    | unsigned int |                    |
+| 10.    | double       | 浮点数，等价于10.0 |
+| 10e-2  | double       | 科学计数法         |
 
 ##### 2.6
 
@@ -1096,3 +1096,364 @@ int zero = 0, *p = NULL;
 ```cpp
 int zero = 0, *p = nullptr;
 ```
+
+## 2.5 处理类型
+
+### 2.5.1 类型别名
+
+有两种方法可用于定义类型别名：
+
+1. 使用关键字`typedef`:
+
+    ```cpp
+    typedef double wages;   // wages 是 double 的同义词
+    typedef wages base, *p; // base 是 double 的同义词，p 是 double* 的同义词
+    ```
+
+    `typedef`作为声明语句中的**基本数据类型的一部分**出现，含有`typedef`的声明语句定义的不再是变量而是类型别名。
+
+2. C++ 11规定了一种新方法，使用别名声明（alias declaration）来定义类型别名：
+
+    ```cpp
+    using SI = Sales_item;  // SI 是 Sales_item 的同义词
+    ```
+
+#### 指针、常量和类型别名
+
+<span style="color: red;">WARNING: 这小节需要重点强调！</span>
+
+如果某个类型别名指代的是复合类型或常量，那么把它用到声明语句里就会产生意想不到的后果。例如下面的声明语句用到了类型pstring，它实际上是类型`char＊`的别名：
+
+```cpp
+typedef char *pstring;
+const pstring cstr = 0; // cstr 是指向 char 的常量指针
+const pstring *ps;      // ps 是一个指针，它指向的对象是指向 char 的常量指针
+```
+
+上述两条声明语句的基本数据类型都是`const pstring`，`const`是对给定类型的修饰。`pstring`实际上是指向`char`的指针，因此，`const pstring`就是指向`char`的常量指针，<span style="color: red;">而非指向常量字符的指针</span>。
+
+遇到使用了类型别名的声明语句时，往往会错误地尝试把类型别名替换成它本来的样子，以理解该语句的含义：
+
+```cpp
+const char *cstr = 0;   // 是对 const pstring cstr 的错误理解
+```
+
+<span style="color: red;">再强调一遍，这种理解是错误的。</span>声明语句中用到`pstring`时，其基本数据类型是**指针**。如果用`char*`重写了声明语句后，基本数据类型就变成了`char`，`*`成为了声明符的一部分。这样改写的结果是，<span style="color: red;">const char成了基本数据类型</span>。
+
+### 2.5.2 auto 类型说明符
+
+- `auto` 让编译器通过初始值来推算变量的类型，显然，`auto` 定义的变量必须有初始值。
+
+    ```cpp
+    auto item = val1 + val2;    // item初始化为val1和val2想家的结果
+    ```
+
+    此处编译器将根据`val1`和`val2`**相加的结果**来推断`item`的类型。
+
+- 使用`auto`也能在一条语句中声明多个变量，要求该语句中所有变量的**初始基本数据类型**都必须一样。
+
+    ```cpp
+    auto i = 0, *p = &i;    // 正确：i是整数、p是整型指针
+    auto sz = 0, pi = 3.14; // 错误：sz和pi的类型不一致
+    ```
+
+#### 复合类型、常量和 auto
+
+编译器推断出来的auto类型**有时候和初始值的类型并不完全一样**：
+
+1. 当引用类型作为右值时，编译器以引用对象的类型作为`auto`的类型：
+
+    ```cpp
+    int i = 0, &r = i;
+    auto a = r; // a 是一个整数（r 是 i 的别名，而 i 是一个整数）
+    ```
+
+2. `auto` 一般会**忽略顶层 const**，同时**底层 const**会保留下来：
+
+    ```cpp
+    const int ci = i, &cr = ci;
+    auto b = ci;    // b 是一个整数（ci 的顶层 const 被忽略）
+    auto c = cr;    // c 是一个整数（cr 是 ci 的别名，ci 的顶层 const 被忽略）
+    auto d = &i;    // d 是一个整型指针（整数的地址就是指向整数的指针）
+    auto e = &ci;   // e 是一个指向整型常量的指针（对常量取地址是一种底层 const）
+    ```
+
+3. 如果希望推断出的`auto`类型是一个**顶层 const**，需要显式指出：
+
+    ```cpp
+    const auto f = ci;
+    ```
+
+4. 可以将引用的类型设为`auto`，此时原来的初始化规则仍然适用：
+
+    ```cpp
+    // 当`auto`与引用结合时，`const`属性的处理方式与普通`auto`不同 —— 会保留`const`属性，因为引用必须尊重其所绑定对象的常量性。
+    auto &g = ci;       // g 是一个整型常量引用，绑定到 ci，而不是整型引用
+    auto &h = 42;       // 错误：不能为非常量引用绑定字面值
+    const auto &j = 42; // 正确：可以为常量引用绑定字面追
+    ```
+
+5. 在一条语句中定义多个变量时，要谨记：<span style="color: red">符号 & 和 * 只从属于某个声明符，而非基本数据类型的一部分</span>。因此，初始值必须是同一种类型：
+
+    ```cpp
+    auto k = ci, &l = i;    // 正确
+    auto &m = ci, *p = &ci; // 正确
+    // auto 从 i 推导为 int，所以 n 是 int&
+    // auto 从 &ci 应该推导为 const int，所以 p2 应该是 const int*
+    // 但同一语句中 auto 不能同时是 int 和 const int，因此错误
+    auto &n = i, *p2 = &ci;
+    ```
+
+#### 练习
+
+##### 练习 2.33
+
+利用本节定义的变星，判断下列语句的运行结果。
+
+- `a = 42`: a 为 int 对象，赋值为 42
+- `b = 42`: b 为 int 对象，赋值为 42
+- `c = 42`: c 为 int 对象，赋值为 42
+- `d = 42`: d 是一个整型指针，不能用整数来赋值
+- `e = 42`: e 是一个指向整型常量的指针（`const int*`（指向 ci）），不能用整数来赋值
+- `g = 42`: g 是一个整型常量引用（`const int&`（绑定到 ci）），不能通过常量引用修改所引用对象的值
+
+##### 练习 2.34
+
+基于上一个练习中的变量和语旬编写一段程序，输出赋值前后变量的内容，你刚才的推断正确吗？如果不对，请反复研读本节的示例直到你明白错在何处为止。
+
+程序：
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int i = 0, &r = i;
+    auto a = r;
+
+    const int ci = i, &cr = ci;
+    auto b = ci;
+    auto c = cr;
+    auto d = &i;
+    auto e = &ci;
+
+    const auto f = ci;
+
+    auto &g = ci;
+    auto &h = 42;
+    const auto &j = 42;
+
+    auto k = ci, &l = i;
+    auto &m = ci, *p = &ci;
+    auto &n = i, *p = &ci;
+
+    a = 42;
+    b = 42;
+    c = 42;
+    d = 42;
+    e = 42;
+    g = 42;
+
+    return EXIT_SUCCESS;
+}
+```
+
+编译结果：
+
+![练习 2.34编译结果](/images/20251101234934.png)
+
+从编译结果能看出，`d`和`e`赋值为42时，都是类型转换错误，而`g`赋值为42时，提示不能给`g`这个类型为`const int &`的引用赋值。
+
+##### 练习 2.35
+
+![练习 2.35](/images/20251101235154.png)
+
+推断：
+
+- `j`: int
+- `k`: const int&
+- `p`: int*
+- `j2`: const int
+- `k2`: const int&
+
+程序验证：
+
+```cpp
+#include <iostream>
+#include <typeinfo>
+
+int main() {
+    const int i = 42;
+    auto j = i;
+    const auto &k = i;
+    auto *p = &i;
+    const auto j2 = i, &k2 = i;
+    
+    // 类型验证
+    std::cout << "j 的类型: " << typeid(j).name() << std::endl;
+    std::cout << "k 的类型: " << typeid(k).name() << std::endl;
+    std::cout << "p 的类型: " << typeid(p).name() << std::endl;
+    std::cout << "j2 的类型: " << typeid(j2).name() << std::endl;
+    std::cout << "k2 的类型: " << typeid(k2).name() << std::endl;
+    
+    // 赋值测试
+    j = 50;      // 正确：j 是非常量 int
+    // k = 50;   // 错误：k 是常量引用，不能修改
+    // *p = 50;  // 错误：p 指向常量，不能通过 p 修改
+    // j2 = 50;  // 错误：j2 是常量
+    // k2 = 50;  // 错误：k2 是常量引用
+    
+    std::cout << "\n赋值测试通过，j 现在的值为: " << j << std::endl;
+    
+    return EXIT_SUCCESS;
+}
+```
+
+测试：
+
+```bash
+./prog
+j 的类型: i
+k 的类型: i
+p 的类型: PKi
+j2 的类型: i
+k2 的类型: i
+
+赋值测试通过，j 现在的值为: 50
+```
+
+### 2.5.3 decltype 类型指示符
+
+如果要 *从表达式的类型推断出要定义的变量的类型*，但不想用该表达式的值初始化变量，C++ 11中引入了关键字`decltype`，它的作用是**选择并返回操作数的数据类型**。
+
+1. 如果decltype使用的表达式是一个变量，则decltype返回该变量的类型（**包括顶层const和引用**），这点注意和auto区分开
+
+    ```cpp
+    const int ci = 0, &ci = ci;
+    decltype(ci) x = 0; // x的类型是 const int
+    decltype(cj) y = x; // y的类型是 const int&
+    decltype(cj) z;     // 错误：z是一个引用，必须初始化
+    ```
+
+    - 引用从来都作为其所指对象的同义词出现，只有用在 decltype 处是一个**例外**
+
+2. 如果decltype使用的表达式不是一个变量，则它返回**表达式结果对应的类型**，如 4.1.1节 介绍的，有些表达式将向 decltype 返回一个**引用类型**。一般这种情况发生时，意味着**该表达式的结果对象**能作为一条赋值语句的**左值**：
+
+    ```cpp
+    int i = 42, &p = &i, &r = i;
+    decltype(r + 0) b;  // 正确，加法的结果是int，因此b是一个（未初始化的）int
+    decltype(*p) c;     // 错误：如果表达式的内容是解引用操作，则decltype将得到引用类型，c是int&，必须初始化
+    ```
+
+    因为`r`是一个引用，因此`decltype(r)`的结果是引用类型，如果想让结果类型是`r`所指的类型，可以把它作为表达式的一部分，如`r+0`。
+
+3. decltype的结果类型与表达式形式密切相关，对于 decltype 所用的表达式来说，如果变量名加上了**一对括号**，则得到的类型与不加括号时会有不同。
+
+    - 如果 decltype 使用的是一个不加括号的变量，则得到的结果就是该变量的类型：
+
+    ```cpp
+    decltype(i) d;      // 正确：d 是一个（未初始化的）int
+    ```
+
+    - 如果 decltype 使用的是一个加上了一层或多层括号的变量，编译器就会把它当成是一个表达式：
+
+    ```cpp
+    decltype((i)) d;    // 错误：d 是一个 int&，必须初始化
+    ```
+
+4. 赋值是会产生引用的一类典型表达式，引用的类型就是左值的类型，也就是说，如果 i 是 int，则表达式 i=x 的类型是 int&，例子见[练习2.37](#_237)
+
+#### 练习
+
+##### 2.36
+
+![练习 2.36](/images/20251102172744.png)
+
+`a`, `b`, `c` 都是`int`型对象，`d`是`int&`型对象。
+
+结束时，`a=4`, `b=4`, `c=4`, `d=4`。
+
+##### 2.37
+
+![练习 2.37](/images/20251102172951.png)
+
+`a`, `b`, `c` 都是`int`型对象，`d`是整型引用。
+
+表达式`a=b`作为`decltype`的参数，编译器分析表达式并得到它的类型作为`d`的推断类型，**但不实际计算该表达式**，所以`a`的值不发生改变，`d`是`a`的别名，最后，`a=3`, `b=4`, `c=3`, `d=3`。
+
+##### 2.38
+
+![练习 2.38](/images/20251102173621.png)
+
+1. `auto`类型说明符用编译器计算变量的初始值来推断其类型，而`decltype`虽然也让编译器分析表达式并得到它的类型，但不实际计算表达式的值；
+2. 编译器推断出来的`auto`类型有时候和初始值并不完全一样，编译器会适当地改变结果类型使其更符合初始化规则。例如，`auto`一般会忽略顶层const，保留底层const。相反，`decltype`会保留变量的顶层const；
+3. 与`auto`不同，`decltype`的结果类型与表达式形式密切相关，如果变量名加上了一对括号，则得到的类型与不加括号时会有不同。如果`decltype`使用的是一个不加括号的变量，则得到的结果就是该变量的类型；如果给变量加上了一层或多层括号，则编译器将推断得到引用类型。
+
+示例程序：
+
+```cpp
+#include <iostream>
+#include <typeinfo>
+
+int main()
+{
+    int a = 3;
+
+    auto c1 = a;          // c1 是 int
+    decltype(a) c2 = a;   // c2 是 int
+    decltype((a)) c3 = a; // c3 是 int&
+
+    const int b = 2;
+    auto d1 = b;          // d1 是 int
+    decltype(b) d2 = b;   // d2 是 const int
+    decltype((b)) d3 = b; // d3 是 const int&
+
+    std::cout << typeid(c1).name() << std::endl;
+    std::cout << typeid(c2).name() << std::endl;
+    std::cout << typeid(c3).name() << std::endl;
+    std::cout << typeid(d1).name() << std::endl;
+    std::cout << typeid(d2).name() << std::endl;
+    std::cout << typeid(d3).name() << std::endl;
+
+    c1++;
+    c2++;
+    c3++;
+
+    d1++;
+    // d2++; 错误，d2 是一个常量
+    // d3++; 错误，d3 是一个常量引用
+
+    return EXIT_SUCCESS;
+}
+```
+
+## 2.6 自定义数据结构
+
+### 2.6.1 定义 Sales_data 类型
+
+介绍了用`struct`定义`Sales_data`，详见`P64~P65`
+
+### 2.6.2 使用 Sales_data 类
+
+介绍了手动编码操作`Sales_data`结构体，详见`P66~P67`
+
+### 2.6.3 编写自己的头文件
+
+⚠️ 头文件一旦改变，相关的源文件必须**重新编译**以获取更新过的声明
+
+#### 预处理器概述
+
+- 预处理器是在**编译之前**执行的一段程序
+- 预处理功能
+  - `#include`: 当处理器看到`#include`标记时就会用指定的头文件的内容代替`#include`
+  - 头文件保护符：依赖于预处理变量，预处理变量有两种状态：已定义和未定义。
+    - `#define`: 把一个名字设定为预处理变量
+    - `#ifdef`: 当且仅当变量已定义时为真
+    - `#ifndef`: 当且仅当变量未定义时为真
+    - 一旦检查结果为真，则执行后续操作直至遇到`#endif`指令为止
+  - ⚠️ 预处理变量无视C++语言关于作用域的规则
+  - ⚠️ 整个程序中的预处理变量包括头文件保护符必须**唯一**
+  - ⚠️ 一般把预处理变量的名字全部大写
+  - 程序员只需要习惯性地加上头文件保护符即可，不需要考虑程序到底需不需要
