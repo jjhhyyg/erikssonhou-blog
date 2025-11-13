@@ -29,10 +29,10 @@
 
             <!-- 底部导航按钮 -->
             <div class="flex justify-end items-center">
-                <!-- 可选：编辑按钮 -->
+                <!-- 可选:编辑按钮 -->
                 <UButton v-if="page?.stem"
-                    :to="`https://github.com/jjhhyyg/erikssonhou-blog/edit/main/content${page.path.replace('/blogs', '')}.md`"
-                    target="_blank" variant="ghost" color="neutral" trailing-icon="i-lucide-external-link"
+                    :to="`https://github.com/jjhhyyg/erikssonhou-blog/edit/main/content${page.path}.md`" target="_blank"
+                    variant="ghost" color="neutral" trailing-icon="i-lucide-external-link"
                     :label="$t('footer.welcomeErrorCorrection')" />
             </div>
         </UPageBody>
@@ -50,13 +50,10 @@
 <script setup lang="ts">
 const route = useRoute()
 
-// 将路由路径转换为内容路径（去掉 /blogs 前缀）
-const contentPath = route.path.replace('/blogs', '')
-
 // 查询当前路径对应的文档
 const { data: page } = await useAsyncData(
     `content-${route.path}`,
-    () => queryCollection('content').path(contentPath).first()
+    () => queryCollection('content').path(route.path).first()
 )
 
 const { t } = useI18n()
