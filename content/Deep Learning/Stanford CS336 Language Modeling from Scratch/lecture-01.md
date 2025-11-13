@@ -1,7 +1,7 @@
 ---
-title: Lecture 1: Oerview and Tokenization
+title: Lecture 1: Overview and Tokenization
 date: 2025-11-10
-description: 
+description: Introduction to language modeling and tokenization techniques
 ---
 
 ## Why did we make this course?

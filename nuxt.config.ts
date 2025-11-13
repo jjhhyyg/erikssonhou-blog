@@ -60,7 +60,30 @@ export default defineNuxtConfig({
     content: {
         build: {
             markdown: {
-                // 启用 Table of Contents 生成,这会自动为标题生成 ID
+                // 配置代码高亮
+                highlight: {
+                    // 支持多主题：浅色和深色模式
+                    theme: {
+                        default: 'github-light',
+                        dark: 'github-dark'
+                    },
+                    // 支持的语言（可选，Shiki 默认支持常见语言）
+                    langs: [
+                        'c',
+                        'cpp',
+                        'javascript',
+                        'typescript',
+                        'python',
+                        'java',
+                        'vue',
+                        'html',
+                        'css',
+                        'bash',
+                        'json',
+                        'markdown'
+                    ]
+                },
+                // Table of Contents 配置
                 toc: {
                     depth: 5,
                     searchDepth: 6
