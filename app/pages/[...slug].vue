@@ -50,10 +50,15 @@
 <script setup lang="ts">
 const route = useRoute()
 
+// 规范化路径：移除尾部斜杠
+const normalizedPath = route.path.endsWith('/') && route.path !== '/'
+    ? route.path.slice(0, -1)
+    : route.path
+
 // 查询当前路径对应的文档
 const { data: page } = await useAsyncData(
-    `content-${route.path}`,
-    () => queryCollection('content').path(route.path).first()
+    `content-${normalizedPath}`,
+    () => queryCollection('content').path(normalizedPath).first()
 )
 
 const { t } = useI18n()
