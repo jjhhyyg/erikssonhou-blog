@@ -3,7 +3,7 @@
         "line_length": 240
     },
     "MD033": {
-        "allowed_elements": ["iframe", "span"]
+        "allowed_elements": ["iframe", "span", "br"]
     },
     "MD024": {
         "siblings_only": true
