@@ -79,7 +79,10 @@ const toggleLocale = () => {
         root: 'border-t border-default dark:border-default'
     }">
         <!--Add Copyright-->
-        <span>© 2025 Eriksson Hou. All rights reserved.</span>
+        <div class="flex items-center gap-3">
+            <span>© 2025 Eriksson Hou. All rights reserved.</span>
+            <VisitorBadge />
+        </div>
         <template #right>
             <UButton v-for="link in footerLinks" :key="link.key" :to="link.to" target="_blank" :icon="link.icon"
                 variant="ghost" size="sm">

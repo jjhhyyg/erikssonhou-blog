@@ -1,5 +1,8 @@
 # Nuxt Minimal Starter
 
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=erikssonhou.nuxt4-project)
+![GitHub stars](https://img.shields.io/github/stars/erikssonhou/nuxt4-project?style=social)
+
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
