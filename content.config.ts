@@ -8,8 +8,14 @@ export default defineContentConfig({
                 include: '**/*.{md,yml}'
             },
             schema: z.object({
-                // 移除 id 字段，使用 Nuxt Content 自动生成的 id
-                date: z.string().optional()
+                // 基础字段
+                date: z.string().optional(),
+                // SEO 扩展字段（可选）
+                keywords: z.array(z.string()).optional(),
+                image: z.string().optional(),
+                author: z.string().optional(),
+                updatedDate: z.string().optional(),
+                category: z.string().optional()
             })
         })
     }

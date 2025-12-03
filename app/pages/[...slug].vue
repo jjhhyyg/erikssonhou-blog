@@ -71,11 +71,29 @@ if (!page.value) {
     })
 }
 
-// 设置页面的 SEO 信息
-useSeoMeta({
+import { useSeo } from '~/composables/useSeo'
+import { useJsonLd } from '~/composables/useJsonLd'
+
+// 使用增强的 SEO composable
+useSeo({
     title: page.value?.title,
     description: page.value?.description,
-    ogTitle: page.value?.title,
-    ogDescription: page.value?.description
+    keywords: page.value?.keywords || [],
+    image: page.value?.image,
+    type: 'article',
+    author: page.value?.author,
+    publishedTime: page.value?.date,
+    modifiedTime: page.value?.updatedDate || page.value?.date,
+    section: page.value?.category
+})
+
+// 添加 BlogPosting JSON-LD
+useJsonLd('blogPosting', {
+    headline: page.value?.title,
+    description: page.value?.description,
+    datePublished: page.value?.date,
+    dateModified: page.value?.updatedDate || page.value?.date,
+    author: page.value?.author,
+    image: page.value?.image
 })
 </script>

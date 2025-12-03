@@ -1,2 +1,20 @@
+# 允许所有搜索引擎爬虫
 User-Agent: *
-Disallow:
+Allow: /
+
+# 禁止索引的路径
+Disallow: /blog-management
+Disallow: /_nuxt/
+Disallow: /api/
+
+# Sitemap 位置
+Sitemap: https://blog.ustbhyy.top/sitemap.xml
+
+# 特定爬虫优化
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0

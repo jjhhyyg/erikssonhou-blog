@@ -10,10 +10,14 @@ const { data: posts } = await useAsyncData('blog-posts', () =>
 import type { ContentNavigationItem } from '@nuxt/content'
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-// 设置页面 SEO
-useSeoMeta({
-    title: '博客文章 - Eriksson Hou',
-    description: '欢迎来到我的博客，这里记录了我的学习和思考'
+import { useSeo } from '~/composables/useSeo'
+
+// 使用增强的 SEO composable
+useSeo({
+    title: '博客文章',
+    description: '欢迎来到我的技术博客，这里记录了关于 Nuxt、Vue、C++、计算机视觉、DaVinci Resolve、Blender 等技术的学习笔记和实践经验。涵盖前端开发、后端技术、算法与数据结构等多个领域。',
+    keywords: ['技术博客', 'Nuxt', 'Vue 3', 'TypeScript', '前端开发', 'C++', '计算机视觉', 'DaVinci Resolve', 'Blender', '视频编辑'],
+    type: 'website'
 })
 
 </script>

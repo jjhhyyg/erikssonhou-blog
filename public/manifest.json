@@ -1,0 +1,23 @@
+{
+  "name": "Eriksson Hou的博客",
+  "short_name": "EH Blog",
+  "description": "记录学习和思考的技术博客，涵盖 Nuxt、Vue、C++、计算机视觉等技术领域",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/og-default.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

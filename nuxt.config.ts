@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// @ts-ignore
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
-    modules: ['@nuxt/ui', '@nuxt/icon', '@pinia/nuxt', '@nuxt/content', '@nuxtjs/i18n'],
+    modules: ['@nuxt/ui', '@nuxt/icon', '@pinia/nuxt', '@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
     devtools: {
         enabled: true,
 
@@ -41,7 +42,22 @@ export default defineNuxtConfig({
     },
     app: {
         baseURL: '/', // 使用自定义域名时应该是根路径
-        buildAssetsDir: 'assets'
+        buildAssetsDir: 'assets',
+        head: {
+            htmlAttrs: {
+                lang: 'zh-CN'
+            },
+            link: [
+                { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+                { rel: 'manifest', href: '/manifest.json' }
+            ],
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'format-detection', content: 'telephone=no' },
+                { name: 'theme-color', content: '#0ea5e9' }
+            ]
+        }
     },
     i18n: {
         langDir: 'locales',
@@ -98,6 +114,26 @@ export default defineNuxtConfig({
                 h5: true,
                 h6: true
             }
+        }
+    },
+    runtimeConfig: {
+        public: {
+            siteUrl: 'https://blog.ustbhyy.top',
+            siteName: 'Eriksson Hou的博客',
+            siteDescription: '记录学习和思考的技术博客，涵盖前端开发、Nuxt、Vue、C++、计算机视觉等技术领域',
+            author: 'Eriksson Hou'
+        }
+    },
+    site: {
+        url: 'https://blog.ustbhyy.top'
+    },
+    sitemap: {
+        exclude: [
+            '/blog-management'
+        ],
+        defaults: {
+            changefreq: 'weekly',
+            priority: 0.7
         }
     }
 })

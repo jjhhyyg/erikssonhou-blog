@@ -27,6 +27,7 @@
         "@iconify-json/lucide": "^1.2.70",
         "@iconify-json/material-symbols": "^1.2.42",
         "@iconify-json/vscode-icons": "^1.2.33",
+        "@nuxtjs/sitemap": "^7.4.7",
         "tailwindcss": "^4.1.15"
     }
 }
