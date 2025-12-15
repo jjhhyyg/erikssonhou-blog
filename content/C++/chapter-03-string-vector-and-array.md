@@ -1,5 +1,6 @@
 ---
 date: 2025-11-05
+updatedDate: 2025-12-11
 title: 3. 字符串、向量和数组
 description: 本章将分别介绍数组以及标准库类型 string 和 vector
 ---
@@ -812,5 +813,605 @@ string::const_iterator it4;
 
 ```cpp
 vector<int> v;
-
+const vector<int> cv;
+auto it1 = v.begin();   // 返回类型为vector<int>::iterator
+auto it2 = cv.begin();  // 返回类型为vector<int>::const_iterator
 ```
+
+为便于专门得到`const_interator`类型的返回值，C++11新标准引入了两个新函数，分别是`cbegin`和`cend`:
+
+```cpp
+auto it3 = v.cbegin();
+```
+
+#### 结合解引用和成员访问操作
+
+解引用迭代器可获得**迭代器所指向的对象**，如果该迭代器恰好是类，就可以进一步访问它的成员：
+
+```cpp
+(*it).empty();  // 解引用it，然后调用结果对象的empty成员
+*it.empty();    // 错误：试图访问it的名为empty的成员，但it是一个迭代器，无empty成员
+```
+
+为简化上述表达式，C++定义了**箭头运算符**（->)，该运算符将**解引用**和**成员访问**两个操作结合在一起：
+
+```cpp
+(*it).empty();
+```
+
+等价于：
+
+```cpp
+it->empty();
+```
+
+#### 某些对vector对象的操作会使迭代器失效
+
+虽然vector对象可以动态增长，但也会有一些 side effects：
+
+- 不能在范围 for 循环（range for）中向vector对象添加元素
+- 任何一种可能改变vector对象容量的操作，如push_back，都会使该vector对象的迭代器失效
+
+#### 练习
+
+##### 练习 3.21
+
+请使用迭代器重做 3.3.3 节的第一个练习。
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    vector<int> v1;
+    vector<int> v2(10);
+    vector<int> v3(10, 42);
+    vector<int> v4{10};
+    vector<int> v5{10, 42};
+    vector<string> v6{10};
+    vector<string> v7{10, "hi"};
+    
+    cout << "v1 " << "size: " << v1.size() << endl;
+    for(auto it = v1.begin(); it != v1.end(); it++) cout << *it << endl;
+    
+    cout << "v2 " << "size: " << v2.size() << endl;
+    for(auto it = v2.begin(); it != v2.end(); it++) cout << *it << endl;
+    
+    cout << "v3 " << "size: " << v3.size() << endl;
+    for(auto it = v3.begin(); it != v3.end(); it++) cout << *it << endl;
+    
+    cout << "v4 " << "size: " << v4.size() << endl;
+    for(auto it = v4.begin(); it != v4.end(); it++) cout << *it << endl;
+    
+    cout << "v5 " << "size: " << v5.size() << endl;
+    for(auto it = v5.begin(); it != v5.end(); it++) cout << *it << endl;
+    
+    cout << "v6 " << "size: " << v6.size() << endl;
+    for(auto it = v6.begin(); it != v6.end(); it++) cout << *it << endl;
+    
+    cout << "v7 " << "size: " << v7.size() << endl;
+    for(auto it = v7.begin(); it != v7.end(); it++) cout << *it << endl;
+    
+    return EXIT_SUCCESS;
+}
+```
+
+##### 练习 3.22
+
+修改之前那个输出text第一段的程序，首先把text的第一段全都改成大写形式，然后再输出它。
+
+```cpp
+int main(int argc, const char * argv[]) {
+    vector<string> text {"Hello, world!", "", "Don't forget who you are."};
+    for (auto it = text.begin(); it != text.end() && !it->empty(); it++) 
+        for (auto cit = it->begin(); cit != it->end(); cit++) 
+            *cit = toupper(*cit);
+    for (auto it = text.cbegin(); it != text.cend(); it++) cout << *it << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+##### 练习 3.23
+
+编写一段程序，创建一个含有 10 个整数的 vector 对象，然后使用迭代器将所有元素的值都变成原来的两倍。输出 vector 对象的内容，检验程序是否正确。
+
+```cpp
+int main(int argc, const char * argv[]) {
+    vector<int> nums {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    for(auto it = nums.begin(); it != nums.end(); it++) *it *= 2;
+    for(auto n : nums) cout << n << " ";
+    cout << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+### 3.4.2 迭代器运算
+
+vector和string迭代器支持的运算：
+
+| 运算符 | 说明 |
+|--------|------|
+| `iter + n` | 迭代器加上一个整数值仍得一个迭代器,迭代器指示的新位置与原来相比向前移动了若干个元素。结果迭代器或者指示容器内的一个元素,或者指示容器尾元素的下一位置 |
+| `iter - n` | 迭代器减去一个整数值仍得一个迭代器,迭代器指示的新位置与原来相比向后移动了若干个元素。结果迭代器或者指示容器内的一个元素,或者指示容器尾元素的下一位置 |
+| `iter1 += n` | 迭代器加法的复合赋值语句,将iter1加n的结果赋给iter1 |
+| `iter1 -= n` | 迭代器减法的复合赋值语句,将iter1减n的结果赋给iter1 |
+| `iter1 - iter2` | 两个迭代器相减的结果是它们之间的距离,也就是说,将运算符右侧的迭代器向前移动差值个元素后将得到左侧的迭代器。参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置 |
+| `>`, `>=`, `<`, `<=` | 迭代器的关系运算符,如果某迭代器指向的容器位置在另一个迭代器所指位置之前,则说前者小于后者。参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置 |
+
+#### 迭代器的算术运算
+
+如果两个迭代器指向的是同一个容器中的元素或者尾元素的下一位置，两者相减所得结果是两个迭代器的距离，其类型是名为**defference_type**的**带符号整型数**。`string`和`vector`都定义了`difference_type`。
+
+## 3.5 数组
+
+### 3.5.1 定义和初始化内置数组
+
+数组是一种**复合类型**，数组中元素的个数在**编译**时应该是可知的，也就是说，数组大小必须是一个**常量表达式**。
+
+```cpp
+unsigned int cnt = 42;          // 不是常量表达式
+constexpr unsigned sz = 42;     // 常量表达式
+int arr[10];                    // 含有10个整数的数组
+int *parr[sz];                  // 含有42个整型指针的数组
+string bad[cnt];                // 错误：cnt不是常量表达式
+string strs[get_size()];        // 当 get_size 是 constexpr 时正确；否则错误
+```
+
+- 默认情况下，数组的元素被**默认初始化**。
+- 和内置类型的变量一样，如果在**函数内部**定义了某种内置类型的数组，那默认初始化会令数组含有未定义的值。
+- 定义数组时，**必须指定数组的类型**，不能用auto关键字来从列表初始化推断数组类型。
+- 和vector一样，数组的元素应为**对象**，因此不存在引用的数组。
+
+#### 显式初始化数组元素
+
+可以对数组进行**列表初始化**：
+
+1. 如果声明时没有指定大小，编译器会根据初始值的数量计算并推测出来；
+2. 如果指明了大小，那初始值的总数量不应该超出指定的大小：如果维度比提供的初始值数量大，则用提供的初始值初始化靠前元素，剩下元素默认初始化。
+
+```cpp
+const unsigned int sz = 3;
+int ia1[sz] = {0, 1, 2};        // 含有 3 个元素的数组，元素值分别是0，1，2
+int a2[] = {0, 1, 2};           // 同上
+int a3[5] = {0, 1, 2};          // 函数体外，等价于a3[] = {0, 1, 2, 0, 0}；
+                                // 函数体内，等价于a3[] = {0, 1, 2, x, x}，x为未知值
+string a4[3] = {"hi", "bye"};   // 等价于a4[] = {"hi", "bye", ""}
+int a5[2] = {0, 1, 2};          // 错误：初始值过多
+```
+
+#### 字符数组的特殊性
+
+```cpp
+const char a4[6] = "Daniel";
+```
+
+上述语句是错误的，当用字符串字面量初始化字符数组时，**数组实际大小应+1**，因为字符串字面量末尾有一个`'\0'`结束符。
+
+#### 不允许拷贝和赋值
+
+- 不能将数组的内容作为其他数组的**初始值**：`int a2[] = a`
+- 不能用数组为其他数组赋值：`a2 = a`
+
+#### 理解复杂的数组声明
+
+方法：不像指针、引用等**从右往左**读的方式，数组的复杂声明最好采用**由内向外，先右后左**的方式：
+
+```cpp
+int arr[10];
+int *ptrs[10];              // 一个含有10个整型指针的数组
+int &refs[10] = /* ? */;    // 错误，不存在引用的数组
+int (*Parray)[10] = &arr;   // Parray是一个指针，然后指向一个含有10个整数的数组
+int (&arrRef)[10] = arr;    // arrRef是一个引用，指向一个含有10个整数的数组
+int *(&arry)[10] = ptrs;    // arry是一个引用，int*决定了该引用指向的是一个含有10个整型指针的数组
+```
+
+#### 练习
+
+##### 练习 3.27
+
+![练习3.27](/images/20251209004031.png)
+
+- (a) 非法，buf_size不是一个常量表达式
+- (b) 合法，`4 * 7 - 14`是一个常量表达式
+- (c) 非法，函数返回的`int`不是编译期间能确定的，`txt_size`函数不是常量表达式
+- (d) 非法，`st`变量的大小应该为12，因为后面的字符串还包含一个空白符
+
+##### 练习 3.28
+
+![练习 3.28](/images/20251209004058.png)
+
+- `sa`: 默认初始化，全为空字符串
+- `ia`: 默认初始化，全为0
+- `sa2`: 默认初始化，全为空字符串
+- `ia2`: 默认初始化，由于在函数体内，都是未知奇异值
+
+##### 练习 3.29
+
+![练习 3.29](/images/20251209004112.png)
+
+1. 数组大小固定不变，虽然某些场景下运行时性能较好，但较vector相比损失了灵活性；
+2. 数组大小在定义时已经确定，如果要更改数组长度，要手动创建一个新数组后一个个复制过去；
+3. 数组大小不能直接像vector那样直接用size()函数获取，如果是字符数组，可以用strlen()函数获取；如果是其他数组，需要用`sizeof(array)/sizeof(array[0])`的方式来计算数组的维度。
+
+### 3.5.2 访问数组元素
+
+使用数组下标时，通常将其定义为`size_t`类型，这是一种**机器相关**的**无符号类型**，它被设计得**足够大**以便表示内存中任意对象的大小，该类型在`cstddef`头文件中定义的。
+
+- 数组访问元素：仅能通过下标访问。
+- 数组也能用range for进行遍历，能减轻人为控制遍历过程的负担。
+
+#### 练习
+
+##### 练习 3.30
+
+![练习 3.30](/images/20251209143249.png)
+
+ix应该从`0`开始，到9结束，for循环应该写为：
+
+```cpp
+for (size_t ix = 0; ix < array_size; ++ix) 
+    ia[ix] = ix;
+```
+
+##### 练习 3.31
+
+编写一段程序，定义一个含有 10 个 int 的数组，令每个元素的值就是其下标值。
+
+```cpp
+int main(int argc, const char * argv[]) {
+    int nums[10];
+    for(int i = 0; i < sizeof(nums)/sizeof(nums[0]); i++) nums[i] = i;
+    for(int num : nums) cout << num << " ";
+    cout << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+##### 练习 3.32
+
+将上一题刚刚创建的数组拷贝给另外一个数组。利用 vector 重写程序，实现类似的功能。
+
+数组拷贝：
+
+```cpp
+int main(int argc, const char * argv[]) {
+    int nums1[10];
+    for(int i = 0; i < sizeof(nums1)/sizeof(nums1[0]); i++) nums1[i] = i;
+    
+    int nums2[10];
+    for(int i = 0; i < sizeof(nums2)/sizeof(nums2[0]); i++) nums2[i] = nums1[i];
+
+    for(int num : nums2) cout << num << " ";
+    cout << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+vector重写：
+
+```cpp
+int main(int argc, const char * argv[]) {
+    vector<int> v1, v2;
+    decltype(v1.size()) sz = 10;
+    for(decltype(v1.size()) i = 0; i < sz; i++) v1.push_back((int)i);
+    v2 = v1; // 直接拷贝
+    for(int num : v2) cout << num << " ";
+    cout << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+##### 练习 3.33
+
+对于 104 页的程序来说，如果不初始化 scores 将发生什么？
+
+104页的程序：
+
+```cpp
+unsigned scores[11] = {};
+unsigned grade;
+while (cin >> grade) {
+    if (grade <= 100)
+        ++socres[grade/10];
+}
+```
+
+程序中对scores进行了列表初始化，所有值都被初始化为0。如果不初始化，那scores被默认初始化且在函数体内部，会存在未定义的值。
+
+### 3.5.3 指针和数组
+
+- 使用数组时，编译器一般会把它转换为**指针**。
+- 对数组元素使用取地址符就能得到指向该元素的指针。
+- 在很多用到数组名字的地方，编译器都会自动地将其替换为一个指向数组首元素的指针：`string *p2 = nums; // 等价于 p2 = &nums[0]`
+- 在一些情况下数组的操作实际上是指针的操作：
+  - 当使用数组作为一个`auto`变量的初始值时，推断得到的类型是**指针**而非数组：
+
+    ```cpp
+    int ia[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto ia2(ia);   // ia2 是一个整型指针，指向 ia 的第一个元素
+    ia2 = 42;       // 错误：ia2 是一个指针，不能用 int 值给指针赋值
+    ```
+
+  - 当使用`decltype`时上述转换不会发生，`decltype`返回的类型是由 10 个整数构成的数组：
+
+    ```cpp
+    decltype(ia) ia3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    ia3 = p;    // 错误：不能用整型指针给数组赋值
+    ia3[4] = i; // 正确：把 i 的值赋给 ia3 的一个元素
+    ```
+
+#### 指针也是迭代器
+
+指向数组元素的指针拥有更多功能，`vector`和`string`的迭代器支持的运算，数组的指针全都支持：
+
+允许使用**递增运算符**将指向数组元素的指针向前移动到下一个位置上:
+
+```cpp
+int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+int *p = arr;   // p 指向 arr 的第一个元素
+++p;            // p 指向 arr[1]
+```
+
+上述代码可获取数组的**首元素指针**，下面是**尾后指针**的获取方式：
+
+```cpp
+int *e = &arr[10]; // 指向 arr 尾元素的下个位置的指针
+```
+
+#### 标准库函数 begin 和 end
+
+为了让指针使用更简单、更安全，C++新标准在`iterator`头文件中引入了两个名为`begin`和`end`的函数：
+
+```cpp
+int ia[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+int *beg = begin(ia);
+int *last = end(ia);
+```
+
+#### 指针运算
+
+指向数组元素的指针可以执行如下运算：
+
+| 运算符 | 说明 |
+|--------|------|
+| `*ptr` | 返回指针ptr所指元素的引用 |
+| `ptr->mem` | 解引用ptr并获取该元素的名为mem的成员,等价于`(*ptr).mem` |
+| `++ptr` | 令ptr指向数组中的下一个元素 |
+| `--ptr` | 令ptr指向数组中的上一个元素 |
+| `ptr1 == ptr2` | 判断两个指针是否相等(不相等),如果两个指针指向的是同一个元素或者它们都指向数组尾后位置,则相等;反之,不相等 |
+| `ptr1 != ptr2` | 判断两个指针是否不相等 |
+| `ptr + n` | 指针加上一个整数值仍得一个指针,指针指示的新位置与原来相比向前移动了若干个元素。结果指针或者指向数组内的一个元素,或者指向数组尾元素的下一位置 |
+| `ptr - n` | 指针减去一个整数值仍得一个指针,指针指示的新位置与原来相比向后移动了若干个元素。结果指针或者指向数组内的一个元素,或者指向数组尾元素的下一位置 |
+| `ptr1 += n` | 指针加法的复合赋值语句,将ptr1加n的结果赋给ptr1 |
+| `ptr1 -= n` | 指针减法的复合赋值语句,将ptr1减n的结果赋给ptr1 |
+| `ptr1 - ptr2` | 两个指针相减的结果是它们之间的距离,也就是说,将运算符右侧的指针向前移动差值个元素后将得到左侧的指针。参与运算的两个指针必须指向的是同一个数组中的元素或者尾元素的下一位置 |
+| `>`, `>=`, `<`, `<=` | 指针的关系运算符,如果某指针指向的数组位置在另一个指针所指位置之前,则说前者小于后者。参与运算的两个指针必须指向的是同一个数组中的元素或者尾元素的下一位置 |
+
+两个指针相减的结果的类型是一种名为**ptrdiff_t**的标准库类型，和`size_t`一样，`ptrdiff_t`也是一种定义在`cstddef`头文件中的**机器相关**的类型。因为差值可能为负值，所以`ptrdiff_t`是一种带符号类型。
+
+#### 下标和指针
+
+只要指针指向的是数组中的元素（或数组中尾元素的下一位置），都可以执行下标运算：
+
+```cpp
+int *p = &ia[2];    // p 指向索引为2的元素
+int j = p[1];       // p[1] 等价于 *(p+1)，等价于ia[3]
+int k = p[-2];      // p[-2] 等价于 *(p-2)，等价于ia[0]
+```
+
+虽然标准库类型`string`和`vector`也能执行下标运算，但数组与他们相比还是有所不同。标准库类型限定使用的下标必须是**无符号类型**，而内置的下标运算无此要求。回顾：
+
+- [vector下标类型](#333-其他-vector-操作)
+- [迭代器相减的结果的类型](#迭代器的算术运算)
+
+#### 练习
+
+##### 练习 3.34
+
+假定 p1 和 p2 指向同一个数组中的元素，则下面程序的功能是什么？什么情况下该程序是非法的？
+
+```cpp
+p1 += p2 - p1;
+```
+
+功能：通过`p2-p1`获取两个指针之间的距离，然后让`p1`加上这个距离，以实现**让`p1`和`p2`指向同一元素**的目的。
+
+已知`p1`和`p2`指向同一个数组中的元素，则说明两者类型相同，不会出现非法情况。即使两者指向的元素不属于同一数组，只要两者类型相同，该语句同样合法。
+
+如果两者类型不同，则编译时出错。
+
+##### 练习 3.35
+
+编写一段程序，利用指针将数组中的元素置为0。
+
+```cpp
+#include <iostream>
+#include <iterator>
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    int a[] = {1, 2, 3, 4, 5};
+    int *beg = begin(a), *last = end(a);
+    for(int *p = beg; p != last; p++) *p = 0;
+    for(int *p = beg; p != last; p++) cout << *p << " ";
+    cout << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+##### 练习 3.36
+
+编写一段程序，比较两个数组是否相等。再写一段程序，比较两个 vector 对象是否相等。
+
+比较两个数组是否相等：
+
+三种方法：
+
+1. 使用`std::equal`，该方法适用于原生数组和容器。
+
+```cpp
+#include <algorithm>
+
+bool areArraysEqual(const int* arr1, int sz1, const int* arr2, int sz2) {
+    if (sz1 != sz2) return false;
+    // std::equal 比较指定范围内的元素
+    return std::equal(arr1, arr1 + sz1, arr2);
+}
+```
+
+2. 使用`memcmp`（C风格，高性能）直接比较内存。
+
+```cpp
+#include <cstring>
+bool areArraysEqualRaw(const int* arr1, int sz1, const int* arr2, int sz2) {
+    if (sz1 != sz2) return false;
+    // 比较内存块，注意长度要乘以 sizeof(int)
+    return std::memcmp(arr1, arr2, sz1 * sizeof(int)) == 0;
+}
+```
+
+3. 手动循环。
+
+```cpp
+bool areArraysEqualRaw(const int* arr1, int sz1, const int* arr2, int sz2) {
+    if (sz1 != sz2) return false;
+    for (int i = 0; i < sz1; i++) {
+        if (arr1[i] != arr2[i]) return false;
+    }
+    return true;
+}
+```
+
+注意，这三种方法中，每个函数都需要传入两个数组的大小，因为数组对象没有如`string`, `vector`之类的容器一样有`size()`成员直接获取长度，而且作为参数传入函数时，实际传入的是该数组的**头指针**，因此也无法通过`sizeof(arr)/sizeof(arr[0])`这样的方式来获取数组长度。
+
+比较两个vector对象是否相等：
+
+```cpp
+bool areVectorsEqual(const vector v1, const vector v2) {
+    return v1 == v2;
+}
+```
+
+### 3.5.4 C风格字符串
+
+C风格字符串本质就是**字符数组**，但字符串末尾是**空字符**。
+
+在C++中，用cstring定义了C风格字符串的一些操作：
+
+| 操作 | 描述 |
+| --- | --- |
+| strlen(p) | 返回`p`的长度，空字符不在长度计算范围内 |
+| strcmp(p1, p2) | 比较`p1`和`p2`两个字符串的相等性。如果p1==p2,返回0；如果p1>p2,返回一个正值；如果p1<p2, 返回一个负值 |
+| strcat(p1, p2) | 将`p2`附加到`p1`之后，返回`p1` |
+| strcpy(p1, p2) | 将`p2`拷贝给`p1`，返回`p1` |
+
+#### 比较字符串
+
+在C++中，`string`对象比较直接用`>`, `<`等运算符即可，但如果字符数组用这些运算符对比，实际上是**两个指针对比**，没有意义。
+
+#### 练习
+
+##### 练习 3.37
+
+![练习 3.37](/images/20251213103140.png)
+
+这段程序存在**严重的缺陷**，会导致**未定义行为(undefined behavior)**。
+
+**程序含义分析**
+
+1. **字符数组定义**：`const char ca[] = {'h', 'e', 'l', 'l', 'o'};` 创建了一个包含5个字符的数组
+2. **指针初始化**：`const char *p = ca;` 使指针p指向数组首元素
+3. **循环遍历**：`while(*p)` 检查当前字符是否为空字符`\0`（值为0）
+4. **打印并移动**：输出当前字符后，指针p递增指向下一个字符
+
+**关键问题**
+
+**该数组缺少null终止符 `\0`！**
+
+在C/C++中，字符串必须以`\0`结尾。当前数组只有5个字符：
+
+```cpp
+ca[0]='h', ca[1]='e', ca[2]='l', ca[3]='l', ca[4]='o'
+```
+
+循环条件`while(*p)`期望遇到`\0`时停止，但数组中没有，因此：
+
+- 指针会越过数组边界，访问未知内存区域
+- 这是典型的**缓冲区溢出(buffer overflow)**
+
+**可能的输出结果**
+
+输出结果**不确定**，取决于数组后面内存的内容：
+
+- **情况1**（运气好）：如果紧邻的内存恰好是0，可能输出：
+
+    ```plaintext
+    h
+    e
+    l
+    l
+    o
+    ```
+
+- **情况2**（常见）：继续输出内存中的垃圾数据，直到遇到0或程序崩溃
+
+- **情况3**：直接导致段错误(segmentation fault)
+
+**正确写法**
+
+```cpp
+const char ca[] = {'h', 'e', 'l', 'l', 'o', '\0'};  // 手动添加终止符
+// 或
+const char ca[] = "hello";  // 字符串字面量自动添加 \0
+```
+
+##### 练习 3.38
+
+在本节中我们提到，将两个指针相加不但是非法的，而且也没什么意义。请问为什么两个指针相加没什么意义？
+
+指针本质上是**内存地址**。指针运算的语义基于以下场景：
+
+- 指针 ± 整数：在数组中移动位置，表示"偏移n个元素"
+- 指针 - 指针：计算两个元素之间的距离
+
+但是两个地址相加：
+
+```cpp
+int arr[10];
+int *p1 = &arr[3];  // 地址假设为 0x1000
+int *p2 = &arr[5];  // 地址假设为 0x1008
+// p1 + p2 = 0x2008 ???
+```
+
+这个结果0x2008既不在数组内，也不表示任何有效的相对关系，完全失去了指针运算的原本含义（在内存布局中导航）。
+简单说：地址是绝对位置，"位置+位置"没有几何意义；只有"位置+偏移量"和"位置-位置"才有意义。
+
+##### 练习 3.39
+
+编写一段程序，比较两个string对象。再编写一段程序，比较两个C风格字符串的内容。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    string s1, s2;
+    s1 = "Hello";
+    s2 = "Hello!";
+    cout << (s1 < s2) << endl;
+    const char *cs1 = "Hello";
+    const char *cs2 = "Hello!";
+    cout << strcmp(cs1, cs2) << endl;
+    return EXIT_SUCCESS;
+}
+```
+
+- 对`string`对象来说，比较结果为真返回true（1），为假返回false（0）；
+- 对C风格字符串来说，使用strcmp进行比较，如果cs1<cs2，返回负值，如果相等，返回0，否则返回正值。
+
+##### 练习 3.40
+
+编写一段程序，定义两个字符数组并用字符串字面值初始化它们；接着再定义一个字符数组存放前两个数组连接后的结果。使用strcpy和strcat把前两个数组的内容拷贝到第三个数组中。
